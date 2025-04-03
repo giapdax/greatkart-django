@@ -1,0 +1,13 @@
+services:
+  web:
+    build: .
+    container_name: greatkart
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app  # Gắn thư mục code vào container
+      - ./db.sqlite3:/app/db.sqlite3
+      - ./static:/app/static
+    environment:
+      - DJANGO_SETTINGS_MODULE=greatkart.settings
+    command: ["gunicorn", "--reload", "--bind", "0.0.0.0:8000", "greatkart.wsgi:application"]
